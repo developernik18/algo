@@ -1,0 +1,377 @@
+// Levenshtein Distance
+// The Levenshtein distance is a string metric for measuring the difference
+// between two sequences. Informally, the Levenshtein distance between two words
+// is the minimum number of single-character edits (insertions, deletions or
+// substitutions) required to change one word into the other.
+
+
+function levenshteinDistance(str1, str2) {
+  // Creating empty distance matrix for all possible modifications of str1 and str2.
+  let distanceMatrix = Array(str1.length + 1).fill(null).map(() => {
+    return Array(str2.length + 1).fill(null);
+  });
+
+  // Fill the first column of the matrix
+  // If this is the first column then we are transforming empty string to str2.
+  // In this case, number of transformation required will be equal to size of substring.
+
+  for(let i=0; i<=str1.length; i++) {
+    distanceMatrix[i][0] = i;
+  }
+
+    // Fill the first row of the matrix.
+  // If this the first row then we are transforming empty string to str1.
+  // In this case number of transformation required will be equal to size of substring.
+  for(let j=0; j<=str2.length; j++) {
+    distanceMatrix[0][j] = j ;
+  }
+
+  console.log(distanceMatrix);
+
+
+  for(let i=1; i<=str1.length; i++) {
+    for(let j=1; j<=str2.length; j++) {
+      const indicator = str1[i-1] === str[j-1] ? 0 : 1;
+      
+      
+    }
+  }
+}
+
+console.log(levenshteinDistance('saturday', 'sunday'));
+
+
+// Palindrome
+
+// A Palindrome is a string that reads the same forwards and backwards. 
+// This means that the second half of the string is the reverse of the first half.
+
+// The following are palindromes (thus would return TRUE):
+
+// - "a"
+// - "pop"     ->  p + o + p
+// - "deed"    ->  de + ed
+// - "kayak"   ->  ka + y + ak
+// - "racecar" ->  rac + e + car
+
+/**
+ * 
+ * @param {string} str - string that needs to be checked.
+ * @returns {boolean} - true for palindrome and false otherwise.
+ */
+// function palindrome(str) {
+//   for(let i=0; i<= str.length/2 ; i++) {
+//     if(str[i] !== str[str.length - i - 1]) {
+//       return false;
+//     }
+//   }
+//   return true;
+// }
+
+
+// let allStr = ['a', 'read', 'pop', 'deed', 'kayak', 'space', 'racecar'];
+
+// allStr.forEach((str) => {
+//   console.log(str,palindrome(str));
+// })
+
+
+
+
+
+
+
+
+
+// -------------------------------------------------------------------------------------
+
+
+// Hamming Distance
+// the Hamming distance between two strings of equal length is the number
+// of positions at which the corresponding symbols are different. In other
+// words, it measures the minimum number of substitutions required to change
+// one string into the other, or the minimum number of errors that could have
+// transformed one string into the other. In a more general context, the Hamming
+// distance is one of several string metrics for measuring the edit distance
+// between two sequences.
+
+// Examples
+// The Hamming distance between:
+
+// "karolin" and "kathrin" is 3.
+// "karolin" and "kerstin" is 3.
+// 1011101 and 1001001 is 2.
+// 2173896 and 2233796 is 3.
+
+/**
+ * 
+ * @param {string} a - first string
+ * @param {string} b - second string
+ * @returns {number} - character that are different in both strings.
+ */
+// function hammingDistance(a, b) {
+//   if(a.length !== b.length) {
+//     throw new Error('String needs to be of same length');
+//   }
+
+//   let distance = 0;
+
+//   for(let i=0; i<a.length; i++) {
+//     if(a[i] !== b[i]) {
+//       distance++;
+//     }
+//   }
+//   return distance;
+// }
+
+// console.log(hammingDistance("1011101","1001001"))
+
+
+// ------------------------------------------------------------------------------
+
+// LCM
+
+// In arithmetic and number theory, the least common multiple, lowest common
+// multiple, or smallest common multiple of two integers a and b, usually
+// denoted by LCM(a, b), is the smallest positive integer that is divisible
+// by both a and b. Since division of integers by zero is undefined, this
+// definition has meaning only if a and b are both different from zero. 
+
+/**
+ * @param {number} a
+ * @param {number} b
+ * @return {number}
+ */
+
+// function leastCommonMultiple(a, b) {
+//   return ((a === 0) || (b === 0)) ? 0 : Math.abs(a * b) / euclidAlgorithm(a, b);
+// }
+
+// console.log(leastCommonMultiple(165, 210));
+
+
+
+// -----------------------------------------------------------------------------------
+
+// Euclidean algorithm
+
+// In mathematics, the Euclidean algorithm, or Euclid's algorithm, 
+// is an efficient method for computing the greatest common divisor 
+// (GCD) of two numbers, the largest number that divides both of them
+// without leaving a remainder.
+
+
+// function GCD(a, b){
+//   let num1 = a;
+//   let num2 = b;
+
+//   while(num1 !== num2) {
+//     if(num1 > num2) {
+//       num1 -= num2;
+//     } else {
+//       num2 -= num1;
+//     }
+//   }
+//   return num1;
+// }
+
+// console.log(GCD(105, 252));
+
+/**
+ * 
+ * @param {number} originalA - 1st number to find GCD
+ * @param {number} originalB - 2nd number to find GCD
+ * @returns {number}
+ */
+// function euclidAlgorithm(originalA, originalB) {
+//   let a = Math.abs(originalA);
+//   let b = Math.abs(originalB);
+
+//   return (b == 0) ? a : euclidAlgorithm(b, a % b);
+// }
+
+// const result = euclidAlgorithm(105, 252);
+// console.log(result);
+
+
+
+
+
+// --------------------------------------------------------------------------------
+
+
+// Primality Test 
+// A prime number (or a prime) is a natural number greater than 1 that cannot
+// be formed by multiplying two smaller natural numbers.
+
+// A primality test is an algorithm for determining whether an input number
+// is prime. Among other fields of mathematics, it is used for cryptography. 
+// Unlike integer factorization, primality tests do not generally give prime
+// factors, only stating whether the input number is prime or not. Factorization 
+// is thought to be a computationally difficult problem, whereas primality 
+// testing is comparatively easy (its running time is polynomial in the size of 
+// the input).
+
+
+/**
+ * 
+ * @param {number} num - Number which required check for prime.
+ * @returns {boolean}
+ */
+// function trialDivision(num) {
+//   // Check if number is integer.
+//   // if(num % 1 !== 0) {
+//   //   return false;
+//   // }
+//   if(!Number.isInteger(num)) return false;
+
+//   if (num < 1) return false;
+  
+//   if (num < 4) return true;
+
+//   if (num % 2 === 0) return false;
+  
+//   const dividerLimit = Math.sqrt(num);
+//   for(let divider = 3; divider <= dividerLimit; divider += 2) {
+//     if(num % divider === 0) {
+//       return false;
+//     }
+//   }
+
+//   return true;
+
+// }
+
+// console.log(trialDivision(131));
+
+
+//---------------------------------------------------------------------------------
+
+// finding prime factors and counting them using Hardy-Ramanujan's theorem
+
+// Prime number is a whole number greater than 1 that cannot 
+// be made by multiplying other whole numbers. The first few 
+// prime numbers are: 
+
+// 2, 3, 5, 7, 11, 13, 17, 19 and so on.
+
+// If we can make it by multiplying other whole numbers
+// it is a Composite Number.
+
+
+// Prime factors are those prime numbers which multiply together
+// to give the original number. For example 39 will have prime factors 
+// of 3 and 13 which are also prime numbers. Another example is 15 
+// whose prime factors are 3 and 5.
+
+/**
+ * Find prime factors of a number
+ * @param {number} num - Number whose prime factor needs to be calculated.
+ * @return {object[]}
+ * 
+ */
+// function primeFactor(num) {
+//   // Clone n to avoid function arguments override.
+//   let newNum = num;
+
+//   // Array that stores the all the prime factors.
+//   const pFactors = [];
+
+//   // Running the loop till sqrt(n) instead of n 
+//   // to optimise time complexity from O(n) to O(sqrt(n)).
+//   for(let i=2; i<Math.sqrt(newNum); i++) {
+//     while(newNum % i === 0) {
+//       newNum /= i;
+//       pFactors.push(i);
+//     }
+//   }
+
+//   if(newNum !== 1) {
+//     pFactors.push(newNum);
+//   }
+
+//   return pFactors;
+// }
+
+// console.log(primeFactor(2650));
+
+
+
+
+// ----------------------------------------------------------------------------------
+
+// In mathematics, the Fibonacci numbers are the numbers in the following 
+// integer sequence, called the Fibonacci sequence, and characterized by
+// the fact that every number after the first two is the sum of the two 
+// preceding ones:
+
+// 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...
+/**
+ * 
+ * @param {number} itemLimit - Number of items that the fibonacci array will contain 
+ * @returns {object[]}
+ */
+
+// function fibonacci(itemLimit) {
+//   let result = [0, 1];
+//   for(let i=2; i<itemLimit; i++) {
+//     result.push(result[i-2] + result[i-1]);
+//   }
+//   return result;
+// }
+
+// console.log(fibonacci(18));
+
+
+
+
+
+// ---------------------------------------------------------------------------------
+
+// factorial => Calculating factorial based on a number
+
+// function factorial(num) {
+//   let output = 1;
+//   for(let i=num; i > 0 ; i--) {
+//     output *= i;
+//   }
+//   return output;
+// }
+
+// console.log(factorial(6));
+
+
+// factorial using recursion
+
+/** 
+*  @param {number} num - Number of which factorial is needed.
+*  @return {number}
+*/
+// function factorial (num) {
+//   return num > 1 ? num * factorial(num - 1) : 1;
+// }
+
+// console.log(factorial(5));
+
+
+
+
+// -----------------------------------------------------------------------------
+
+// linear search - search a target in set of items
+// If target is present then index value, else false is returned.
+
+// const t = 34;
+// const a = [89, 45, 10, 48, 62, 9, 24, 64, 34];
+
+// function isTargetElementPresent(target, array) {
+//   let output = false;
+//   array.forEach((element, index) => {
+//     if(target === element) {
+//       output = index;
+//     }
+//   });
+//   return output;
+// }
+
+// console.log(isTargetElementPresent(t, a));
