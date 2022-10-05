@@ -5,6 +5,12 @@
 // substitutions) required to change one word into the other.
 
 
+/**
+ * 
+ * @param {string} str1 - First string
+ * @param {string} str2 - Second string
+ * @returns {number} - Minimum number of single character edits required for conversions.
+ */
 function levenshteinDistance(str1, str2) {
   // Creating empty distance matrix for all possible modifications of str1 and str2.
   let distanceMatrix = Array(str1.length + 1).fill(null).map(() => {
@@ -26,19 +32,26 @@ function levenshteinDistance(str1, str2) {
     distanceMatrix[0][j] = j ;
   }
 
-  console.log(distanceMatrix);
 
 
   for(let i=1; i<=str1.length; i++) {
     for(let j=1; j<=str2.length; j++) {
-      const indicator = str1[i-1] === str[j-1] ? 0 : 1;
+      const indicator = str1[i-1] === str2[j-1] ? 0 : 1;
       
-      
+      distanceMatrix[i][j] = Math.min(
+        distanceMatrix[i][j-1] + 1,
+        distanceMatrix[i-1][j] + 1,
+        distanceMatrix[i-1][j-1] + indicator
+      )
     }
   }
+
+  return distanceMatrix[str1.length][str2.length];
 }
 
-console.log(levenshteinDistance('saturday', 'sunday'));
+// console.log(levenshteinDistance('saturday', 'sunday'));
+console.log(levenshteinDistance('aeroplane', 'airports'));
+
 
 
 // Palindrome
