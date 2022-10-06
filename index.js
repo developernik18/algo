@@ -1,3 +1,77 @@
+// The Knuth–Morris–Pratt string searching algorithm (or KMP algorithm) 
+// searches for occurrences of a "word" W within a main "text string" T by
+// employing the observation that when a mismatch occurs, the word itself 
+// embodies sufficient information to determine where the next match could 
+// begin, thus bypassing re-examination of previously matched characters.
+
+
+/**
+ * 
+ * @param {string} word - word that is being searched.
+ * @returns {object[]} - pattern in form of array.
+ */
+function buildPatternTable(word) {
+  const patternTable = [0];
+  let prefixIndex = 0;
+  let suffixIndex = 1;
+
+  while(suffixIndex < word.length) {
+    if(word[prefixIndex] === word[suffixIndex]) {
+      patternTable[suffixIndex] = prefixIndex + 1;
+      prefixIndex++;
+      suffixIndex++;
+    } else if(prefixIndex === 0) {
+      patternTable[suffixIndex] = 0;
+      suffixIndex += 1;
+    } else {
+      prefixIndex = patternTable[prefixIndex - 1];
+    }
+  }
+  return patternTable;
+}
+
+
+/**
+ * 
+ * @param {string} text - Text string
+ * @param {string} word - word that is being searched.
+ * @returns {number} - Index in text string where word is present or -1 for error.
+ */
+function knuthMorrisPratt(text, word) {
+  if (word.length === 0) {
+    return 0;
+  }
+
+  let textIndex = 0;
+  let wordIndex = 0;
+
+  const patternTable = buildPatternTable(word);
+
+  while(textIndex < text.length) {
+    if(text[textIndex] === word[wordIndex]) {
+      if(wordIndex === word.length - 1) {
+        return (textIndex - word.length) + 1;
+      }
+      wordIndex += 1;
+      textIndex += 1;
+    } else if(wordIndex > 0) {
+      wordIndex = patternTable[wordIndex - 1];
+    } else {
+      textIndex += 1;
+    }
+  } 
+  return -1;
+}
+
+console.log(knuthMorrisPratt('abcxabcdabxaabcdabcabcdabcdabcy', 'abcdabca'))
+
+
+
+
+
+// ------------------------------------------------------------------------------
+
+
 // Levenshtein Distance
 // The Levenshtein distance is a string metric for measuring the difference
 // between two sequences. Informally, the Levenshtein distance between two words
@@ -11,46 +85,46 @@
  * @param {string} str2 - Second string
  * @returns {number} - Minimum number of single character edits required for conversions.
  */
-function levenshteinDistance(str1, str2) {
-  // Creating empty distance matrix for all possible modifications of str1 and str2.
-  let distanceMatrix = Array(str1.length + 1).fill(null).map(() => {
-    return Array(str2.length + 1).fill(null);
-  });
+// function levenshteinDistance(str1, str2) {
+//   // Creating empty distance matrix for all possible modifications of str1 and str2.
+//   let distanceMatrix = Array(str1.length + 1).fill(null).map(() => {
+//     return Array(str2.length + 1).fill(null);
+//   });
 
-  // Fill the first column of the matrix
-  // If this is the first column then we are transforming empty string to str2.
-  // In this case, number of transformation required will be equal to size of substring.
+//   // Fill the first column of the matrix
+//   // If this is the first column then we are transforming empty string to str2.
+//   // In this case, number of transformation required will be equal to size of substring.
 
-  for(let i=0; i<=str1.length; i++) {
-    distanceMatrix[i][0] = i;
-  }
+//   for(let i=0; i<=str1.length; i++) {
+//     distanceMatrix[i][0] = i;
+//   }
 
-    // Fill the first row of the matrix.
-  // If this the first row then we are transforming empty string to str1.
-  // In this case number of transformation required will be equal to size of substring.
-  for(let j=0; j<=str2.length; j++) {
-    distanceMatrix[0][j] = j ;
-  }
+//     // Fill the first row of the matrix.
+//   // If this the first row then we are transforming empty string to str1.
+//   // In this case number of transformation required will be equal to size of substring.
+//   for(let j=0; j<=str2.length; j++) {
+//     distanceMatrix[0][j] = j ;
+//   }
 
 
 
-  for(let i=1; i<=str1.length; i++) {
-    for(let j=1; j<=str2.length; j++) {
-      const indicator = str1[i-1] === str2[j-1] ? 0 : 1;
+//   for(let i=1; i<=str1.length; i++) {
+//     for(let j=1; j<=str2.length; j++) {
+//       const indicator = str1[i-1] === str2[j-1] ? 0 : 1;
       
-      distanceMatrix[i][j] = Math.min(
-        distanceMatrix[i][j-1] + 1,
-        distanceMatrix[i-1][j] + 1,
-        distanceMatrix[i-1][j-1] + indicator
-      )
-    }
-  }
+//       distanceMatrix[i][j] = Math.min(
+//         distanceMatrix[i][j-1] + 1,
+//         distanceMatrix[i-1][j] + 1,
+//         distanceMatrix[i-1][j-1] + indicator
+//       )
+//     }
+//   }
 
-  return distanceMatrix[str1.length][str2.length];
-}
+//   return distanceMatrix[str1.length][str2.length];
+// }
 
-// console.log(levenshteinDistance('saturday', 'sunday'));
-console.log(levenshteinDistance('aeroplane', 'airports'));
+// // console.log(levenshteinDistance('saturday', 'sunday'));
+// console.log(levenshteinDistance('aeroplane', 'airports'));
 
 
 
